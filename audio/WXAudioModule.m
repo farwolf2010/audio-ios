@@ -9,9 +9,11 @@
 #import <WeexPluginLoader/WeexPluginLoader.h>
 #import "audio.h"
 #import <FSAudioStream.h>
+#import "Weex.h"
 
 WX_PlUGIN_EXPORT_MODULE(audio, WXAudioModule)
 @implementation WXAudioModule
+@synthesize weexInstance;
 WX_EXPORT_METHOD(@selector(play:))
 WX_EXPORT_METHOD(@selector(pause))
 WX_EXPORT_METHOD(@selector(stop))
@@ -29,7 +31,9 @@ WX_EXPORT_METHOD(@selector(setOnStartPlay:))
 
 
 -(void)play:(NSString*)url{
+    url=[Weex getFinalUrl:url weexInstance:weexInstance].absoluteString;
     if(![self.url isEqualToString:url]){
+        
         self.url=url;
          [[audio sharedManager] playFromURL:[NSURL URLWithString:url]];
     }else{
