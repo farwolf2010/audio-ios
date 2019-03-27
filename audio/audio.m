@@ -14,6 +14,8 @@
     static FSAudioStream *instance;
     dispatch_once(&onceToken, ^{
         instance = [[FSAudioStream alloc] init];
+        instance.strictContentTypeChecking = NO;
+        instance.defaultContentType = @"audio/mpeg";
     });
     return instance;
 }
